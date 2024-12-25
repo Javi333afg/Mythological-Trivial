@@ -61,3 +61,47 @@ const Questions = [
     correct: "Athena",
 }
 ];
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+// Reset variables
+function startGame() {
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById("score").textContent = "Score: ${score}";
+    loadQuestion();
+}
+
+// Load the current question
+function loadQuestion() {
+    if (currentQuestionIndex < questions,length) {
+        const question = questions[currentQuestionIndex];
+        document.getElementById("question").textContent = question.question;
+
+        const buttons = document.querySelectorAll(".answer-button");
+        buttons.forEach((button, index) => {
+            button.textContent = question.answers[index];
+        });
+    } else {
+        endgame();
+    }
+    
+}
+
+// Handle the answer selection
+function handleAnswer(event) {
+    const selectedAnswer = event.target.textContent;
+    const correctAnswer = questions[currentQuestionIndex].correct;
+
+    if (selectedAnswer === correctAnswer) {
+        alert("Very Good! You answer is Correct!");
+        score++;
+        document.getElementById("score").textContent = "Score: ${score}";
+    } else {
+        alert("Sorry, that's incorrect. The correct answer is: ${correctAnswer}");
+    }
+    
+    currentQuestionIndex++;
+    loadQuestion();
+}
