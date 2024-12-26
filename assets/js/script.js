@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 /**Questions and Answers */
-const Questions = [
+const questions = [
 {
-    question: "Who is the king of thinder in norse mythology?",
+    question: "Who is the king of thunder in norse mythology?",
     answers: ["Thor", "Odin", "Loki", "Freya"],
     correct: "Thor",
 },
@@ -19,42 +19,42 @@ const Questions = [
     question: "What a mortal son of god died when seeing his reflection?",
     answers: ["Edipos", "Narcissus", "Teseus", "Cadmus"],
     correct: "Narcissus",
-}
+},
 {
     question: "What is the name of the god of the sea?",
     answers: ["Poseidon", "Zeus", "Ares", "Hades"],
     correct: "Poseidon",
-}
+},
 {
     question: "How is the goddess of hunting?",
     answers: ["Hera", "Athena", "Hestia","Artemis"],
     correct: "Artemis",
-}
+},
 {
     question: "Which mythical monster did Theseus defeat?",
     answers: ["Minotaur", "Cyclops", "Chimera", "Sphinx"],
     correct: "Minotaur",
-}
+},
 {
     question: "What is the name of the goddess of love?",
     answers: ["Hera", "Athena","Aphrodite", "Artemis"],
     correct: "Aphrodite",
-}
+},
 {
     question: "Which of these gods is NOT the brother of Ares, the god of war?",
     answers: ["Hermes", "Athena", "Hades", "Dionysus"],
     correct: "Hades",
-}
+},
 {
     question: "What is the name of the god of the sun?",
     answers: ["Apollo", "Ares", "Zeus", "Hades"],
     correct: "Apollo",
-}
+},
 {
     question: "Which of these is NOT a Greek god?",
     answers: ["Hades", "Zeus", "Ares", "Hera"],
     correct: "Hera",
-}
+},
 {
     question: "What is the name of the goddess of wisdom?",
     answers: ["Athena", "Hera", "Aphrodite", "Artemis"],
@@ -69,19 +69,20 @@ let score = 0;
 function startGame() {
     currentQuestionIndex = 0;
     score = 0;
-    document.getElementById("score").textContent = "Score: ${score}";
+    document.getElementById("score").textContent = `Score: ${score}`;
     loadQuestion();
 }
 
 // Load the current question
 function loadQuestion() {
-    if (currentQuestionIndex < questions,length) {
+    if (currentQuestionIndex < questions.length) {
         const question = questions[currentQuestionIndex];
         document.getElementById("question").textContent = question.question;
 
         const buttons = document.querySelectorAll(".answer-button");
         buttons.forEach((button, index) => {
             button.textContent = question.answers[index];
+            button.dataset.index = index;
         });
     } else {
         endgame();
@@ -95,13 +96,23 @@ function handleAnswer(event) {
     const correctAnswer = questions[currentQuestionIndex].correct;
 
     if (selectedAnswer === correctAnswer) {
-        alert("Very Good! You answer is Correct!");
+        alert("Very Good! Your answer is Correct!");
         score++;
-        document.getElementById("score").textContent = "Score: ${score}";
+        document.getElementById("score").textContent = `Score: ${score}`;
     } else {
-        alert("Sorry, that's incorrect. The correct answer is: ${correctAnswer}");
+        alert(`Sorry, that's incorrect. The correct answer is: ${correctAnswer}`);
     }
     
     currentQuestionIndex++;
     loadQuestion();
+}
+
+// End the game function
+function endgame() {
+    alert(`Game Over! Your final score is: ${score}`);
+    document.getElementById("question").textContent = "Press Start to play again!";
+    const buttons = document.querySelectorAll(".answer-button");
+    buttons.forEach(button => {
+        button.textContent = "";
+    });
 }
