@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #fbfbfd;
+    background-image: url('../images/gods.jpg');
     color: #333;
     margin: 0;
     padding: 0;
@@ -31,7 +32,7 @@ header {
 }
 
 .answer-button {
-    background-color: #79757ead;
+    background-color: #362b1677;
     color: #fff;
     border: none;
     padding: 10px;
