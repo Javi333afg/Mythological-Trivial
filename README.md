@@ -14,11 +14,14 @@ The game presents 10 questions, each with 4 possible answers. Your score is upda
 
 - **Start Game**: Clicking on "Start Game" begins the quiz.
 - **Interactive Questions**: Each question offers 4 multiple-choice answers.
+![Game Screenshot](docs/images/gameplay.png)
 - **Immediate Feedback**: After selecting an answer, an alert tells you if you are correct or shows the correct answer.
 ![Correct answer](docs/images/correct.png) 
 ![Wrong answer](docs/images/wrong.png)
 - **Score Tracking**: Your score increases with every correct answer.
+![Score](docs/images/score.png)
 - **Game End Screen**: When all 10 questions are answered, your final score is displayed and the game resets so you can play again.
+![End Screen](docs/images/gameover.png)
 
 ### Design
 
@@ -33,9 +36,6 @@ The game presents 10 questions, each with 4 possible answers. Your score is upda
 
 ### Header
 ![Header Screenshot](docs/images/header.png)
-
-### Gameplay
-![Game Screenshot](docs/images/gameplay.png)
 
 ### Footer
 ![Footer Screenshot](docs/images/footer.png)
