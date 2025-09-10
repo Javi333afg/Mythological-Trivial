@@ -66,3 +66,9 @@ You can see the code here:
 ![Test](docs/images/W3C.png)
 - I tested with lighthouse the website.
 ![Perfomance](docs/images/perfomance.png)
+
+## Credits
+
+- Background image: [Unsplash](https://unsplash.com/) (Gods theme image)  
+- Icons: [Font Awesome](https://fontawesome.com/)  
+- Favicon: helmet.png from [Flaticon](https://www.flaticon.com/)  

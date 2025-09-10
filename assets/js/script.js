@@ -9,7 +9,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-/**Questions and Answers */
+/**====
+ * Questions Array
+ * Stores all quiz questions, answer options and the correct answer
+ ===**/
+
 const questions = [
 {
     question: "Who is the king of thunder in norse mythology?",
@@ -67,7 +71,10 @@ let currentQuestionIndex = 0;
 let score = 0;
 let gameActive = false;
 
-// Reset variables
+/** =====
+ * Start Game
+ * Resets variables, enables buttons, loads first question
+ ====*/
 function startGame() {
     currentQuestionIndex = 0;
     score = 0;

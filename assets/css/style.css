@@ -1,7 +1,10 @@
+/* ===== GENERAL RESET ===== */
 html, body {
     margin: 0;
     height: 100%;
 }
+
+/* ===== PAGE BACKGROUND ===== */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -14,6 +17,7 @@ body {
     flex-direction: column;
 }
 
+/* ===== HEADER STYLING ===== */
 header {
     background-color: #946e1b9d;
     color: #fff;
