@@ -91,7 +91,6 @@ Expected: Defensive design prevents starting without a valid name; error message
 
 - W3C Markup Validator and CSS Validator.
 ![Test](docs/images/W3C.png) 
-![Test](docs/images/CSS.png)
 
 - I tested with lighthouse the website.
 ![Perfomance](docs/images/perfomance.png)
