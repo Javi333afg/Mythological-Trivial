@@ -2,24 +2,35 @@ document.addEventListener("DOMContentLoaded", function() {
     const startButton = document.getElementById("start-game");
     startButton.addEventListener("click", startGame);
 
+    const answersEl = document.querySelector(".answers");     
+    answersEl.classList.add("is-hidden");          
+
     const answerButtons = document.querySelectorAll(".answer-button");
     answerButtons.forEach(button => {
         button.addEventListener("click", handleAnswer);
         button.disabled = true; 
     });
 
-    document.querySelector(".answers").classList.add("is-hidden"); // Hide answers initially
-
     // Player name input and validation
     nameInput = document.getElementById("player-name");
     nameError = document.getElementById("name-error"); 
+    const playerSetupEl = document.querySelector(".player-setup");   
+     
+    // Load saved name from localStorage
+    const savedName = localStorage.getItem("playerName");           
+    if (savedName && savedName.trim().length >= 2) {                 
+      nameInput.value = savedName;
+      playerSetupEl.classList.add("is-hidden");                     
+      startButton.disabled = false;                                 
+      document.getElementById("score").textContent = `Score: 0 — Player: ${savedName}`;
+    }
 
     nameInput.addEventListener("input", () => {
       clearNameError();
       const valid = nameInput.value.trim().length >= 2;
-      startButton.disabled = !valid;                    
+      startButton.disabled = !valid;
     });
-
+    
     nameInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         startGame();
@@ -83,7 +94,7 @@ const questions = [
     correct: "Athena",
 }
 ];
-
+// Game state variables
 let currentQuestionIndex = 0;
 let score = 0;
 let gameActive = false;
@@ -104,6 +115,9 @@ function clearNameError() {
  * Resets variables, enables buttons, loads first question
  ====*/
 function startGame() {
+    const startButton = document.getElementById("start-game");  
+    const playerSetupEl = document.querySelector(".player-setup");
+    const answersEl = document.querySelector(".answers");
 
     const name = nameInput ? nameInput.value.trim() : "";
     if (!name) {
@@ -118,12 +132,19 @@ function startGame() {
     }
     clearNameError();
 
+    // Save name to localStorage
+    localStorage.setItem("playerName", name);
+    playerSetupEl.classList.add("is-hidden");
+
+    startButton.classList.add("is-hidden");
+
     currentQuestionIndex = 0;
     score = 0;
     gameActive = true;
-    document.getElementById("score").textContent = `Score: ${score}`;
+    document.getElementById("score").textContent = `Score: ${score} — Player: ${name}`;
 
-    document.querySelector(".answers").classList.remove("is-hidden");
+
+    answersEl.classList.remove("is-hidden");
     document.querySelectorAll(".answer-button").forEach((b) => (b.disabled = false));
     loadQuestion();
 }
@@ -152,7 +173,8 @@ function handleAnswer(event) {
     if (isCorrect) {
         alert("Very good! Your answer is correct!");
         score++;
-        document.getElementById("score").textContent = `Score: ${score}`;
+        const savedName = localStorage.getItem("playerName") || "";
+        document.getElementById("score").textContent = `Score: ${score} — Player: ${savedName}`;
     } else {
         const correctAnswer = questions[currentQuestionIndex].correct;
         alert(`Sorry, that's incorrect. The correct answer is: ${correctAnswer}`);
@@ -164,9 +186,14 @@ function handleAnswer(event) {
 
 // End the game function
 function endgame() {
+    const startButton = document.getElementById("start-game");
+    const answersEl = document.querySelector(".answers");
+
+    // Disable further interactions
     gameActive = false;
     alert(`Game Over! Your final score is: ${score}`);
     document.getElementById("question").textContent = "Press Start to play again!";
+
     const buttons = document.querySelectorAll(".answer-button");
     buttons.forEach((button) => {
         button.textContent = "";
@@ -174,5 +201,6 @@ function endgame() {
         delete button.dataset.correct;
     });
 
-      document.querySelector(".answers").classList.add("is-hidden"); // Hide answers at game end
+    answersEl.classList.add("is-hidden");
+    startButton.classList.remove("is-hidden");
 }
