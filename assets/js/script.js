@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const answerButtons = document.querySelectorAll(".answer-button");
     answerButtons.forEach(button => {
         button.addEventListener("click", handleAnswer);
+        button.disabled = true; 
     });
 });
 
@@ -41,7 +42,7 @@ const questions = [
     correct: "Aphrodite",
 },
 {
-    question: "Which of these gods is NOT the brother of Ares, the god of war?",
+    question: "Which of these gods is NOT the brother of Ares (the god of war)?",
     answers: ["Hermes", "Athena", "Hades", "Dionysus"],
     correct: "Hades",
 },
@@ -52,8 +53,8 @@ const questions = [
 },
 {
     question: "Which of these is NOT a Greek god?",
-    answers: ["Hades", "Zeus", "Ares", "Hera"],
-    correct: "Hera",
+    answers: ["Hades", "Zeus", "Ares", "Ra"],
+    correct: "Ra",
 },
 {
     question: "What is the name of the goddess of wisdom?",
@@ -64,12 +65,16 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let score = 0;
+let gameActive = false;
 
 // Reset variables
 function startGame() {
     currentQuestionIndex = 0;
     score = 0;
+    gameActive = true;
     document.getElementById("score").textContent = `Score: ${score}`;
+    loadQuestion();
+document.querySelectorAll(".answer-button").forEach((b) => (b.disabled = false));
     loadQuestion();
 }
 
@@ -82,37 +87,40 @@ function loadQuestion() {
         const buttons = document.querySelectorAll(".answer-button");
         buttons.forEach((button, index) => {
             button.textContent = question.answers[index];
-            button.dataset.index = index;
+            button.dataset.correct = question.answers[index] === question.correct ? "true" : "false";
         });
     } else {
         endgame();
     }
-    
 }
 
 // Handle the answer selection
 function handleAnswer(event) {
-    const selectedAnswer = event.target.textContent;
-    const correctAnswer = questions[currentQuestionIndex].correct;
+    if (!gameActive) return;
 
-    if (selectedAnswer === correctAnswer) {
-        alert("Very Good! Your answer is Correct!");
+    const isCorrect = event.target.dataset.correct === "true";
+    if (isCorrect) {
+        alert("Very good! Your answer is correct!");
         score++;
         document.getElementById("score").textContent = `Score: ${score}`;
     } else {
+        const correctAnswer = questions[currentQuestionIndex].correct;
         alert(`Sorry, that's incorrect. The correct answer is: ${correctAnswer}`);
     }
-    
+
     currentQuestionIndex++;
     loadQuestion();
 }
 
 // End the game function
 function endgame() {
+    gameActive = false;
     alert(`Game Over! Your final score is: ${score}`);
     document.getElementById("question").textContent = "Press Start to play again!";
     const buttons = document.querySelectorAll(".answer-button");
-    buttons.forEach(button => {
+    buttons.forEach((button) => {
         button.textContent = "";
+        button.disabled = true;
+        delete button.dataset.correct;
     });
 }
