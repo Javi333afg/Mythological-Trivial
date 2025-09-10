@@ -186,21 +186,36 @@ function handleAnswer(event) {
 
 // End the game function
 function endgame() {
-    const startButton = document.getElementById("start-game");
-    const answersEl = document.querySelector(".answers");
+  const startButton   = document.getElementById("start-game");
+  const answersEl     = document.querySelector(".answers");
+  const playerSetupEl = document.querySelector(".player-setup");
+  const nameInputEl   = document.getElementById("player-name");
 
-    // Disable further interactions
-    gameActive = false;
-    alert(`Game Over! Your final score is: ${score}`);
-    document.getElementById("question").textContent = "Press Start to play again!";
+  gameActive = false;
+  alert(`Game Over! Your final score is: ${score}`);
+  document.getElementById("question").textContent = "Press Start to play again!";
 
-    const buttons = document.querySelectorAll(".answer-button");
-    buttons.forEach((button) => {
-        button.textContent = "";
-        button.disabled = true;
-        delete button.dataset.correct;
-    });
+  const buttons = document.querySelectorAll(".answer-button");
+  buttons.forEach((button) => {
+    button.textContent = "";
+    button.disabled = true;
+    delete button.dataset.correct;
+  });
 
-    answersEl.classList.add("is-hidden");
+    // Hide answers and show start button
+  if (answersEl)   answersEl.classList.add("is-hidden");
+  if (startButton) {
     startButton.classList.remove("is-hidden");
+    startButton.disabled = true;
+  }
+
+    // Reset player setup for new game
+  if (playerSetupEl) playerSetupEl.classList.remove("is-hidden");
+  if (nameInputEl) {
+    nameInputEl.value = "";
+    nameInputEl.removeAttribute("aria-invalid");
+  }
+
+   // Clear stored name to require re-entry
+  localStorage.removeItem("playerName");
 }
