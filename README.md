@@ -11,8 +11,8 @@ The game presents 10 questions, each with 4 possible answers. Your score is upda
 ## Features
 
 ### Gameplay
-
-- **Start Game**: Clicking on "Start Game" begins the quiz.
+- **Player name**: To register the player's name, fill the name box.
+- **Start Game**: Once with the right name filled clicking on "Start Game" begins the quiz.
 - **Interactive Questions**: Each question offers 4 multiple-choice answers.
 ![Game Screenshot](docs/images/gameplay.png)
 - **Immediate Feedback**: After selecting an answer, an alert tells you if you are correct or shows the correct answer.
@@ -23,22 +23,25 @@ The game presents 10 questions, each with 4 possible answers. Your score is upda
 - **Game End Screen**: When all 10 questions are answered, your final score is displayed and the game resets so you can play again.
 ![End Screen](docs/images/gameover.png)
 
-### Design
+## Defensive Design & Accessibility
 
+No early interaction: Answer buttons are disabled (and/or hidden) until the game starts.
+
+Shuffled answers: Options are randomized per question to avoid pattern memorization.
+
+Dynamic updates: Question text and score update live on screen.
+
+(Optional) Player name before starting, with basic validation and error messaging via aria-live.
+
+### Design
+- Header with the game title
+![Header Screenshot](docs/images/header.png)
 - Clean and simple interface.
 - Responsive layout adaptable to desktop and mobile.
 - Mythology-themed background.
 - Footer with links to social media.
-
----
-
-## Screenshots
-
-### Header
-![Header Screenshot](docs/images/header.png)
-
-### Footer
 ![Footer Screenshot](docs/images/footer.png)
+
 
 ---
 
@@ -52,7 +55,7 @@ The game presents 10 questions, each with 4 possible answers. Your score is upda
 
 ## Deployment
 
-You can see the code here:  
+Live Site (GitHub Pages): 
 [GitHub Repository](https://github.com/Javi333afg/Mythological-Trivial)
 
 
@@ -60,12 +63,44 @@ You can see the code here:
 
 ## Testing
 
-- I tested that this page works in different browsers: Chrome, Firefox, Safari.
-- I confirmed that the social media links open in new tabs.
-- I tested in the W3C Markup Validator and CSS Validator.
-![Test](docs/images/W3C.png)
+- **Functional tests**
+
+- No interaction before start
+Steps: Load the page → Try clicking answers.
+Expected: Answer buttons remain disabled/hidden until the game starts. 
+
+- Start game flow
+Steps: Click Start Game (and, if enabled, enter a valid name first).
+Expected: First question appears; buttons enabled; score resets to 0. 
+
+- Answer handling
+Steps: Choose an answer (wrong, then correct).
+Expected: Immediate feedback via alerts; score only increases on correct answers. 
+
+- Progression & end
+Steps: Answer all questions.
+Expected: Final score alert; answers hide/disable; you can start a new game. 
+
+- Replay
+Steps: Click Start Game again.
+Expected: Game resets to question 1 with score 0. 
+
+- (Optional) Player name validation
+Steps: Enter fewer than 2 characters → Start stays disabled; enter ≥ 2 → Start enabled.
+Expected: Defensive design prevents starting without a valid name; error message announced. 
+
+- W3C Markup Validator and CSS Validator.
+![Test](docs/images/W3C.png) 
+![Test](docs/images/CSS.png)
+
 - I tested with lighthouse the website.
 ![Perfomance](docs/images/perfomance.png)
+
+**Cross-browser/device**
+
+Tested on Chrome, Firefox, Safari (desktop).
+
+Checked responsive layout with mobile presets in DevTools (phone/tablet).
 
 ## Credits
 
