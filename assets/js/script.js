@@ -7,13 +7,30 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener("click", handleAnswer);
         button.disabled = true; 
     });
+
+    document.querySelector(".answers").classList.add("is-hidden"); // Hide answers initially
+
+    // Player name input and validation
+    nameInput = document.getElementById("player-name");
+    nameError = document.getElementById("name-error"); 
+
+    nameInput.addEventListener("input", () => {
+      clearNameError();
+      const valid = nameInput.value.trim().length >= 2;
+      startButton.disabled = !valid;                    
+    });
+
+    nameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        startGame();
+      }
+    });
 });
 
 /**====
  * Questions Array
  * Stores all quiz questions, answer options and the correct answer
  ===**/
-
 const questions = [
 {
     question: "Who is the king of thunder in norse mythology?",
@@ -70,18 +87,44 @@ const questions = [
 let currentQuestionIndex = 0;
 let score = 0;
 let gameActive = false;
+let nameInput = null; 
+let nameError = null;  
+
+function showNameError(msg) {            
+  if (nameError) nameError.textContent = msg;
+  if (nameInput) nameInput.setAttribute("aria-invalid", "true");
+}
+function clearNameError() {                       
+  if (nameError) nameError.textContent = "";
+  if (nameInput) nameInput.removeAttribute("aria-invalid");
+}
 
 /** =====
  * Start Game
  * Resets variables, enables buttons, loads first question
  ====*/
 function startGame() {
+
+    const name = nameInput ? nameInput.value.trim() : "";
+    if (!name) {
+      showNameError("Please enter your name.");
+      nameInput && nameInput.focus();
+      return;
+    }
+    if (name.length < 2) {
+      showNameError("Name must be at least 2 characters.");
+      nameInput && nameInput.focus();
+      return;
+    }
+    clearNameError();
+
     currentQuestionIndex = 0;
     score = 0;
     gameActive = true;
     document.getElementById("score").textContent = `Score: ${score}`;
-    loadQuestion();
-document.querySelectorAll(".answer-button").forEach((b) => (b.disabled = false));
+
+    document.querySelector(".answers").classList.remove("is-hidden");
+    document.querySelectorAll(".answer-button").forEach((b) => (b.disabled = false));
     loadQuestion();
 }
 
@@ -130,4 +173,6 @@ function endgame() {
         button.disabled = true;
         delete button.dataset.correct;
     });
+
+      document.querySelector(".answers").classList.add("is-hidden"); // Hide answers at game end
 }

@@ -17,8 +17,26 @@
             <h1>Mythological Trivial</h1>
         </header>
 
-        <!-- MAIN CONTAINER: Score, question, answers and game controls -->
+        <!-- MAIN CONTAINER: Player setup, score, question, answers and game controls -->
         <div class="container">
+            <!-- PLAYER SETUP -->
+             <div class="player-setup" aria-labelledby="player-legend">
+               <label id="player-legend" for="player-name">Enter your name to start:</label>
+                 <input
+                  type="text"
+                  id="player-name"
+                  name="player-name"
+                  minlength="2"
+                  maxlength="20"
+                  required
+                  placeholder="e.g., Alex"
+                  aria-describedby="name-error"
+                 />
+                 <p id="name-error" class="form-error" aria-live="polite"></p>
+            </div>
+
+
+            <!-- GAME AREA: score, question, answers and start button -->
             <p id="score">Score: 0</p>
             <p class="question" id="question">Press "Start Game" to play.</p>
 
@@ -29,7 +47,7 @@
                 <button class="answer-button" id="answer4"></button>
             </div>
 
-            <button id="start-game">Start Game</button>
+            <button type="button" id="start-game" disabled>Start Game</button>
         </div>
 
         <!-- FOOTER: Social links -->
